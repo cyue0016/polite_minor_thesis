@@ -9,27 +9,29 @@ Python: 3.6.13
 
 TensorFlow: 1.3.0
 
-## Command After Setting the environment to 3.6.13
+## Install Command After Setting the environment to 3.6.13
 ```
 pip install pandas
 pip install nltk
 conda install gensim
 pip install jsonlines
 pip install python-Levenshtein
+conda install gensim
+conda install openpyxl
 ```
 
 ## Politeness Classifier
 
-(1) Obtain the [Stanford Politeness Corpus](http://www.cs.cornell.edu/~cristian/Politeness_files/Stanford_politeness_corpus.zip), unzip it, and put the files under data/
+(1) Obtain the [Stanford Politeness Corpus](http://www.cs.cornell.edu/~cristian/Politeness_files/Stanford_politeness_corpus.zip), unzip it, and put the folder and files under data/
 
-(2) Download the [jar file of the Stanford Postagger](https://nlp.stanford.edu/software/tagger.shtml) and put it to main directory, i.e stanford-postagger-full-2020-11-17/stanford-postagger.jar (required for tokenization)
+(2) Download the [jar file of the Stanford Postagger](https://nlp.stanford.edu/software/tagger.shtml) and put it under root directory, i.e stanford-postagger-full-2020-11-17/stanford-postagger.jar (required for tokenization)
 
-(3) Download the [pretrained word2vec embeddings binary file](https://drive.google.com/uc?export=download&confirm=wa0J&id=0B7XkCwpI5KDYNlNUTTlSS21pQmM) and put it to main directory, i.e. GoogleNews-vectors-negative300.bin
+(3) Download the [pretrained word2vec embeddings binary file](https://drive.google.com/uc?export=download&confirm=wa0J&id=0B7XkCwpI5KDYNlNUTTlSS21pQmM) and put it under root directory, i.e. GoogleNews-vectors-negative300.bin
 
 To preprocess the politeness data, please run
 ```
 python src/basic/read_csv.py
-python src/basic/process_requests.py --tagger_path stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar [path to Stanford Postagger jar file] --word2vec GoogleNews-vectors-negative300.bin [path to pretrained word2vec bin file]
+python src/basic/process_requests.py  --forum_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.xlsx --forum_text_column "Text" --tagger_path stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar --word2vec GoogleNews-vectors-negative300.bin
 ```
 
 To train the politeness classifier from scratch, please run
@@ -37,13 +39,14 @@ To train the politeness classifier from scratch, please run
 python3 src/model/LSTM-CNN-multi-GPU-new_vocab.py
 ```
 
-To test the politeness classifier, please run
+To test the politeness classifier and apply the politeness score to the excel file as a new column, please run
 ```
 python3 src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt [name of the checkpoint]
 ```
+
 The model should get around 85.0% and 70.2% accuracies on the WIKI and SE domains, respectively (for comparison to results from previous works, please refer to [the paper](https://arxiv.org/abs/1805.03162)). 
 
-You can optionally use our trained model [checkpoint](https://drive.google.com/open?id=1593PqiZFk8O1p7095D-8E6KDvxx6j1qQ) by putting it under ckpt/)
+The trained model is also uploaded to under ckpt/
 
 ## Polite Dialogue Generation
 
