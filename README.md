@@ -6,8 +6,15 @@ Initially forked the Github codes from Tong Niu and Mohit Bansal, modified the c
 
 ## Environment
 Python: 3.6.13
+
 TensorFlow: 1.3.0
 
+## Command After Setting the environment to 3.6.13
+```
+pip install pandas
+pip install nltk
+conda install gensim
+```
 
 ## Politeness Classifier
 
@@ -19,8 +26,8 @@ TensorFlow: 1.3.0
 
 To preprocess the politeness data, please run
 ```
-python3 src/basic/read_csv.py
-python3 src/basic/process_requests.py --tagger_path [path to Stanford Postagger jar file] --word2vec [path to pretrained word2vec bin file]
+python src/basic/read_csv.py
+python src/basic/process_requests.py --tagger_path stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar [path to Stanford Postagger jar file] --word2vec GoogleNews-vectors-negative300.bin [path to pretrained word2vec bin file]
 ```
 
 To train the politeness classifier from scratch, please run
