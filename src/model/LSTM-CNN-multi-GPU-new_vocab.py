@@ -383,7 +383,7 @@ with graph.as_default():
                         initializer=tf.constant_initializer(0.1))
                     logits = tf.nn.xw_plus_b(
                         h_maxpool, weights=W_out, biases=b_out)
-                    scores = tf.nn.softmax(logits, axis=-1)
+                    scores = tf.nn.softmax(logits, dim=-1)
                     scores_lst.append(scores[:, 1])
 
                 # Predictions
