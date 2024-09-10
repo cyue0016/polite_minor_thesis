@@ -76,7 +76,7 @@ def process_file(file_path):
 
 
 # Main processing logic
-base_dir = "C:/Users/Kelvin/Documents/Research/polite-dialogue-generation-master/data/Stanford_politeness_corpus"
+base_dir = "data/Stanford_politeness_corpus/"
 current_dir = "data/Stanford_politeness_corpus/"
 args = parse_args()
 file_names = [args.wiki_file, args.se_file]

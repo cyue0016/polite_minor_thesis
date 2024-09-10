@@ -40,7 +40,7 @@ def parse_args():
         help="The column name that contains the forum text data")
     parser.add_argument(
         "--tagger_path", type=str, 
-        default="stanford-postagger-full-2020-11-17/stanford-postagger.jar",
+        default="stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar",
         help="path to the Stanford pos tagger")
     parser.add_argument(
         "--word2vec", type=str, default="GoogleNews-vectors-negative300.bin",
@@ -121,7 +121,7 @@ tokenized_datasets_original_tweet = [
     for dataset in datasets
 ]
 
-print("Retokenizing with Stanford tokenizer. This may take a long time.")
+print("Retokenizing with Stanford tokenizer. This may take a long time, several hours.")
 
 tokenizer = StanfordTokenizer(tagger_path)
 
@@ -148,6 +148,7 @@ Vocab lists:
 • vocab_shared: intersection of word2vec vocab and politeness vocab
 • vocab_freq: frequent vocab that is not in word2vec vocab
 """
+output_dir = "data/Stanford_politeness_corpus/"
 
 UNK = "UNK_TOKEN"
 
