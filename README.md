@@ -46,44 +46,15 @@ The model should get around 85.0% and 70.2% accuracies on the WIKI and SE domain
 You can optionally use our trained model [checkpoint](https://drive.google.com/open?id=1593PqiZFk8O1p7095D-8E6KDvxx6j1qQ) by putting it under ckpt/)
 
 ## Polite Dialogue Generation
-After training the politeness classifier, please put the SubTle corpus (for pretraining) and the MovieTriples dataset under data/.
 
-The SubTle corpus can be obtained by contacting the authors of the [original paper](http://www.inesc-id.pt/publications/10062/pdf), 
-and the MovieTriples dataset can be obtained from the [owner of the dataset](https://github.com/julianser) upon request.
-
-To preprocess the SubTle corpus and the MovieTriples dataset, please run
-```
-python3 process_movie_triples_classifier_seq2seq.py --word2vec [path to pretrained word2vec bin file]
-```
-
-(0) To pretrain on the SubTle corpus, please run
-```
-python3 src/model/seq2seq-RL.py --pretrain
-```
-
-(1) To train the Fusion model, please run
-```
-python3 src/model/fusion_seq2seq_LM.py --ckpt_classifier [name of the checkpoint]
-```
-(2) To train the Label-Fine-Tuning (LFT) model, please run
-```
-python3 src/model/seq2seq-LFT.py --ckpt_classifier [name of the checkpoint]
-```
-(3) To train the Polite-RL model, please run
-```
-python3 src/model/seq2seq-RL.py --ckpt_classifier [name of the checkpoint]
-```
-
-To test the above three models, please add "--test" to each command, the generated responses will be under output/ (you can optionally use our trained model [checkpoints](https://drive.google.com/open?id=1593PqiZFk8O1p7095D-8E6KDvxx6j1qQ) by putting them under ckpt/).
-```
-python3 src/model/fusion_seq2seq_LM.py --test --ckpt_generator [name of the checkpoint]
-python3 src/model/seq2seq-LFT.py --test --ckpt_generator [name of the checkpoint]
-python3 src/model/seq2seq_RL.py --test --ckpt_generator [name of the checkpoint]
-```
 
 ## Citations
 
-If you happen to use our work, please consider [citing our paper](https://transacl.org/ojs/index.php/tacl/rt/captureCite/1424/310/BibtexCitationPlugin).
+Please cite both my paper and Niu's paper if you appear to use the politeness classifier.
+
+
+
+[citing our paper](https://transacl.org/ojs/index.php/tacl/rt/captureCite/1424/310/BibtexCitationPlugin).
 ```
 @article{TACL1424,
 	author = {Niu, Tong and Bansal, Mohit},
