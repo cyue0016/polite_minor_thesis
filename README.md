@@ -6,6 +6,7 @@ Initially forked the Github codes from Tong Niu and Mohit Bansal, modified the c
 
 ## Environment
 Python: 3.6.13
+TensorFlow: 1.3.0
 
 
 ## Politeness Classifier
