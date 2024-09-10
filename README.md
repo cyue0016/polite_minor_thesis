@@ -15,6 +15,7 @@ pip install pandas
 pip install nltk
 conda install gensim
 pip install jsonlines
+pip install python-Levenshtein
 ```
 
 ## Politeness Classifier
