@@ -16,7 +16,6 @@ import pickle
 import random
 from nltk.tokenize.stanford import StanfordTokenizer
 import argparse
-
 from util import load_pickle, load_pickles, dump_pickles, dump_pickle
 
 
@@ -90,10 +89,10 @@ tokenized_datasets_original_tweet = [
 
 print("Retokenizing with Stanford tokenizer. This may take a long time.")
 
-path_pos = "/playpen/home/tongn/stanford-postagger-full-2017-06-09/"
+path_pos = "/stanford-postagger-full-2020-11-17/"
 jar_pos = "stanford-postagger.jar"
 
-tokenizer = StanfordTokenizer(path_pos + jar_pos)
+# tokenizer = StanfordTokenizer(path_pos + jar_pos)
 tokenizer = StanfordTokenizer(tagger_path)
 
 tokenized_datasets_original = [
@@ -144,7 +143,7 @@ else:
         for (token, freq) in fdist_lst 
         if (freq >= freq_threshold)]
 
-    vocab_word2vec = list(model.vocab) # get word2vec vocabulary list
+    vocab_word2vec = list(model.key_to_index) # get word2vec vocabulary list
     vocab_shared = list((set(vocab_politeness)).intersection(set(vocab_word2vec)))
     vocab_new = list((set(vocab_politeness_freq)).difference(set(vocab_word2vec)))
     vocab_politeness = [UNK] + vocab_new + vocab_shared
@@ -169,10 +168,10 @@ Replace a token with its index in the vocab
 index_UNK = token2index[UNK]
 
 def replace_with_index(token):
-#     if token in vocab_politeness:
+    #     if token in vocab_politeness:
     try:
         return token2index[token]
-#     else:
+    #     else:
     except:
         return index_UNK
 
