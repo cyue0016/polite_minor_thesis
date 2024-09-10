@@ -2,15 +2,16 @@
 
 Author: YUEN, Chak Shing
 
-Initially forked the Github codes from Tong Niu and Mohit Bansal, modified the code and apply to the new dataset.
+Based on the LSTM-CNN politeness model scripts from Tong in 2018, I further modified the code to include the Stanford forum post data and test the model accuracy.
 
 ## Environment
 Python: 3.6.13
 
-TensorFlow: 1.3.0
+TensorFlow: 1.15
 
 ## Install Command After Setting the environment to 3.6.13
 ```
+pip install tensorflow==1.15
 pip install pandas
 pip install nltk
 conda install gensim
@@ -30,7 +31,7 @@ conda install openpyxl
 
 (4) Obtain the [stanfordMOOCForumPostsSet](https://datastage.stanford.edu/StanfordMoocPosts), and put the folder and files inside under data/
 
-To preprocess the politeness data, please run
+To preprocess the politeness data of the 3 datasets, please run
 ```
 python src/basic/read_csv.py
 python src/basic/process_requests.py  --forum_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.xlsx --forum_text_column "Text" --tagger_path stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar --word2vec GoogleNews-vectors-negative300.bin
@@ -38,12 +39,17 @@ python src/basic/process_requests.py  --forum_file data/stanfordMOOCForumPostsSe
 
 To train the politeness classifier from scratch, please run
 ```
-python3 src/model/LSTM-CNN-multi-GPU-new_vocab.py
+python src/model/LSTM-CNN-multi-GPU-new_vocab.py
 ```
 
-To test the politeness classifier and apply the politeness score to the excel file as a new column, please run
+To test the politeness classifier, please run
 ```
-python3 src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt [name of the checkpoint]
+python src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt [name of the checkpoint]
+```
+
+To apply the politeness score to the forum post excel file as a new column, please run
+```
+python
 ```
 
 The model should get around 85.0% and 70.2% accuracies on the WIKI and SE domains, respectively (for comparison to results from previous works, please refer to [the paper](https://arxiv.org/abs/1805.03162)). 
