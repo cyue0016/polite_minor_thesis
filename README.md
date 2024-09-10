@@ -1,19 +1,20 @@
 # Politeness of Educational Forum Posts
 
-Authors' YUEN, Chak Shing
+Author: YUEN, Chak Shing
 
-Initially copied the Github codes from Tong Niu and Mohit Bansal, modified the code and apply to the new dataset.
+Initially forked the Github codes from Tong Niu and Mohit Bansal, modified the code and apply to the new dataset.
 
 ## Environment
+Python: 3.6.13
 
 
 ## Politeness Classifier
 
 (1) Obtain the [Stanford Politeness Corpus](http://www.cs.cornell.edu/~cristian/Politeness_files/Stanford_politeness_corpus.zip), unzip it, and put the files under data/
 
-(2) Download the [jar file of the Stanford Postagger](https://nlp.stanford.edu/software/tagger.shtml) (required for tokenization)
+(2) Download the [jar file of the Stanford Postagger](https://nlp.stanford.edu/software/tagger.shtml) and put it to main directory (required for tokenization)
 
-(3) Download the [pretrained word2vec embeddings binary file](https://drive.google.com/uc?export=download&confirm=wa0J&id=0B7XkCwpI5KDYNlNUTTlSS21pQmM)
+(3) Download the [pretrained word2vec embeddings binary file](https://drive.google.com/uc?export=download&confirm=wa0J&id=0B7XkCwpI5KDYNlNUTTlSS21pQmM) and put it to main directory
 
 To preprocess the politeness data, please run
 ```
