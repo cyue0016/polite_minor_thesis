@@ -25,8 +25,8 @@ conda install openpyxl
 (1) Obtain the [Stanford Politeness Corpus](http://www.cs.cornell.edu/~cristian/Politeness_files/Stanford_politeness_corpus.zip), unzip it, and put the folder and files under data/
 
 (2) Download the [jar file of the Stanford Postagger](https://nlp.stanford.edu/software/tagger.shtml) and put it under root directory, i.e stanford-postagger-full-2020-11-17/stanford-postagger.jar (required for tokenization)
-
 (3) Download the [pretrained word2vec embeddings binary file](https://drive.google.com/uc?export=download&confirm=wa0J&id=0B7XkCwpI5KDYNlNUTTlSS21pQmM) and put it under root directory, i.e. GoogleNews-vectors-negative300.bin
+(4) Obtain the [stanfordMOOCForumPostsSet](https://datastage.stanford.edu/StanfordMoocPosts), and put the folder under data/
 
 To preprocess the politeness data, please run
 ```
