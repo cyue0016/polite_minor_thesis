@@ -1,10 +1,11 @@
-# Polite Dialogue Generation Without Parallel Data (TACL 2018)
+# Politeness of Educational Forum Posts
 
-Authors' implementation of "[Polite Dialogue Generation Without Parallel Data](https://arxiv.org/abs/1805.03162)" (TACL 2018) in TensorFlow (the code was built upon TF 1.3, but any version later than that should also work).
+Authors' YUEN, Chak Shing
 
-Includes code for the politeness classifier and the three proposed polite dialogue generation models.
+Initially copied the Github codes from Tong Niu and Mohit Bansal, modified the code and apply to the new dataset.
 
-Authors: Tong Niu, Mohit Bansal ([bib citation entry](https://transacl.org/ojs/index.php/tacl/rt/captureCite/1424/310/BibtexCitationPlugin))
+## Environment
+
 
 ## Politeness Classifier
 
