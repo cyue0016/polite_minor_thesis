@@ -14,6 +14,7 @@ TensorFlow: 1.3.0
 pip install pandas
 pip install nltk
 conda install gensim
+pip install jsonlines
 ```
 
 ## Politeness Classifier
