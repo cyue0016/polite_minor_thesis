@@ -104,7 +104,8 @@ token2index = {token: i for (i, token) in enumerate(vocab_politeness)}
 hidden_size = 256
 embedding_size = 300
 num_classes = 2
-num_epochs = 3
+# Add the number of epochs to 32
+num_epochs = 32
 batch_size_per_gpu = batch_size // num_gpus
 
 # hyper-parameters
