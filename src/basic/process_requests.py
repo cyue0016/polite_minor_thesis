@@ -30,7 +30,7 @@ def parse_args():
         "--wiki_file", type=str, default="data/Stanford_politeness_corpus/dataset_wikipedia.annotated.pkl",
         help="path to WIKI politeness data file")
     parser.add_argument(
-        "--se_file", type=str, default="data/Stanford_politeness_corpus/labels_stack-exchange.annotated.pkl",
+        "--se_file", type=str, default="data/Stanford_politeness_corpus/dataset_stack-exchange.annotated.pkl",
         help="path to SE politeness data file")
     parser.add_argument(
         "--forum_file", type=str, default="data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.xlsx",
@@ -87,38 +87,43 @@ if forum_file:
 
     texts = df[forum_text_column].tolist()
     tweet_tokenizer = TweetTokenizer(preserve_case=True, reduce_len=True, strip_handles=True)
-    # Ensure that only valid strings are tokenized
-    tokenized_forum_posts = [tweet_tokenizer.tokenize(str(text)) for text in texts if isinstance(text, str)]
 
-    # Convert all tokens to lowercase
-    tokenized_forum_posts = [[token.lower() for token in post] for post in tokenized_forum_posts]
+    processed_forum_posts = []
 
-    # Append forum posts to datasets for further processing
-    datasets.append(tokenized_forum_posts)
+    for i, text in enumerate(texts):
+        if isinstance(text, list):
+            # If it's a list, assume it's already tokenized and lowercase the tokens
+            processed_forum_posts.append([token.lower() for token in text])
+        elif isinstance(text, str):
+            # If it's a string, tokenize and lowercase as usual
+            tokenized_post = tweet_tokenizer.tokenize(text)
+            processed_forum_posts.append([token.lower() for token in tokenized_post])
+        elif isinstance(text, (int, float)):
+            # Convert int and float to string before tokenizing
+            tokenized_post = tweet_tokenizer.tokenize(str(text))
+            processed_forum_posts.append([token.lower() for token in tokenized_post])
+        else:
+            # If it can not be handled, send the message.
+            print(f"Line {i}: Skipping unrecognized type: {type(text)}")
 
-# Ensure that text is decoded from bytes to string if necessary
-def decode_if_bytes(text):
-    if isinstance(text, bytes):
-        return text.decode('utf-8')  # Adjust the encoding as per your data
-    return text
+    # Append processed forum posts to datasets for further processing
+    datasets.append(processed_forum_posts)
 
 print("Tokenizing all requests.")
 
 tweet_tokenizer = TweetTokenizer(
     preserve_case=True, reduce_len=True, strip_handles=True)
 
-# Apply decoding and tokenization
+# Continue processing the rest of the datasets (Wiki and SE)
 tokenized_datasets_original_tweet = [
-    [tweet_tokenizer.tokenize(decode_if_bytes(request)) for request in dataset]
+    [tweet_tokenizer.tokenize(request) if isinstance(request, str) else request
+     for request in dataset]
     for dataset in datasets
 ]
 
 print("Retokenizing with Stanford tokenizer. This may take a long time.")
 
-path_pos = "/stanford-postagger-full-2020-11-17/"
-jar_pos = "stanford-postagger.jar"
-
-tokenizer = StanfordTokenizer(path_pos + jar_pos)
+tokenizer = StanfordTokenizer(tagger_path)
 
 tokenized_datasets_original = [
     [tokenizer.tokenize(' '.join(request).strip())
