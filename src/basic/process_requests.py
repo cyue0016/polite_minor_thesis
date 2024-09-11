@@ -77,7 +77,7 @@ if se_file:
 datasets = load_pickles(files) if files else []
 
 """
-Handle forum post Excel file if provided
+Handle forum post Excel file separately
 """
 if forum_file:
     df = pd.read_excel(forum_file, engine='openpyxl')
@@ -106,10 +106,15 @@ if forum_file:
             # If it can not be handled, send the message.
             print(f"Line {i}: Skipping unrecognized type: {type(text)}")
 
-    # Append processed forum posts to datasets for further processing
-    datasets.append(processed_forum_posts)
+    # Save the forum posts separately without adding to datasets used for model training
+    forum_tokenized_path = "data/stanfordMOOCForumPostsSet/tokenized_forum.pkl"
+    dump_pickle(forum_tokenized_path, processed_forum_posts)
+    print(f"Forum posts tokenized and saved to {forum_tokenized_path}")
 
-print("Tokenizing all requests.")
+"""
+Continue tokenizing WIKI and SE datasets
+"""
+print("Tokenizing all requests from Wikipedia and Stack Exchange datasets.")
 
 tweet_tokenizer = TweetTokenizer(
     preserve_case=True, reduce_len=True, strip_handles=True)
@@ -121,7 +126,7 @@ tokenized_datasets_original_tweet = [
     for dataset in datasets
 ]
 
-print("Retokenizing with Stanford tokenizer. This may take a long time, several hours.")
+print("Retokenizing with Stanford tokenizer. This may take a long time.")
 
 tokenizer = StanfordTokenizer(tagger_path)
 
@@ -161,8 +166,8 @@ else:
 
     freq_threshold = 2
 
-    # Get all tokens from all datasets
-    all_tokens = [token for dataset in datasets for request in dataset for token in request]
+    # Get all tokens from the WIKI and SE datasets
+    all_tokens = [token for dataset in tokenized_datasets for request in dataset for token in request]
 
     fdist = FreqDist(all_tokens)
     fdist_lst = fdist.most_common()
@@ -201,14 +206,14 @@ def replace_with_index(token):
         return index_UNK
 
 
-print("Start indexing datasets... This may take a while")
+print("Start indexing WIKI and SE datasets... This may take a while")
 indexed_datasets = [
     [[replace_with_index(token) for token in request] for request in dataset]
-    for dataset in datasets
+    for dataset in tokenized_datasets
 ]
 
 """
-Save the processed data
+Save the processed data (WIKI and SE datasets only)
 """
 if use_existing_vocab:
     lsts = [indexed_datasets[0], indexed_datasets[1]]  # WIKI and SE datasets
@@ -230,11 +235,7 @@ else:
         "embedding_word2vec_politeness.pkl"
     ]
 
-    if forum_file:
-        lsts.append(indexed_datasets[-1])  # Adding indexed forum dataset
-        pickle_lst.append("dataset_forum.pkl")  # Save forum as 'dataset_forum.pkl'
-
-# Hardcoding file paths for saving
+# Save the WIKI and SE processed data
 pickle_files = [
     "data/Stanford_politeness_corpus/vocab_politeness.pkl",
     "data/Stanford_politeness_corpus/shared_vocab_politeness.pkl",
@@ -244,11 +245,7 @@ pickle_files = [
     "data/Stanford_politeness_corpus/embedding_word2vec_politeness.pkl"
 ]
 
-if forum_file:
-    pickle_files.append("data/Stanford_politeness_corpus/dataset_forum.pkl")  # Add hardcoded forum save path
-    pickle_files.append("data/stanfordMOOCForumPostsSet/dataset_forum.pkl")
-
 # Save the processed data to the hardcoded paths
 dump_pickles(pickle_files, lsts)
 
-print(f"Preprocessing complete. Files saved to the hardcoded paths.")
+print(f"Preprocessing complete. Files for WIKI and SE datasets saved to the hardcoded paths.")
