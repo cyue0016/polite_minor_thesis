@@ -1,10 +1,14 @@
 # Politeness of Educational Forum Posts
 
 Author: YUEN, Chak Shing
+
 Faculty of Information Technology
+
 Monash University
 
-Based on the LSTM-CNN politeness model scripts from Tong in 2018, I further modified the code to include the Stanford forum post data and test the model accuracy.
+## Project Description
+
+Based on the LSTM-CNN politeness model proposed in 2018 in [Niu's paper](https://arxiv.org/abs/1805.03162), I forked the repository and further modified the code needed to process the Stanford forum post data and assign politeness score using his model, then analysis is conducted on the stanford forum post dataset.
 
 ## Environment
 Python: 3.6.13
@@ -52,10 +56,12 @@ To test the politeness classifier and apply the politeness score to the forum po
 python src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt ckpt/politeness_classifier_2 [path of the checkpoint trained model] --tokenized_file data/stanfordMOOCForumPostsSet/tokenized_forum.pkl [path of the preprocessed excel file] --output_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.csv [path of the new csv file]
 ```
 
-The best trained model is also uploaded to under ckpt/ for easier reference
+The best trained model is also uploaded to under ckpt/ for easier reference.
+
+Only the scripts mentioned are modified for the project.
 
 ## Politeness Analysis
-Now with the politeness score generated from LSTM-CNN model, we may use the python script to conduct the analysis.
+Now with the politeness score generated from LSTM-CNN model, we may use the ipynb file to conduct the analysis together with convo package
 
 ## Citations
 
