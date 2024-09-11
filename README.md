@@ -29,7 +29,7 @@ conda install openpyxl
 
 (3) Download the [pretrained word2vec embeddings binary file](https://drive.google.com/uc?export=download&confirm=wa0J&id=0B7XkCwpI5KDYNlNUTTlSS21pQmM) and put it under root directory, i.e. GoogleNews-vectors-negative300.bin
 
-(4) Obtain the [stanfordMOOCForumPostsSet](https://datastage.stanford.edu/StanfordMoocPosts), and put the folder and files inside under data/
+(4) Obtain the [stanfordMOOCForumPostsSet]([https://datastage.stanford.edu/StanfordMoocPosts](https://github.com/akshayka/edxclassify?tab=readme-ov-file)), and put the folder and files inside under data/
 
 To preprocess the politeness data of the 3 datasets, please run
 ```
