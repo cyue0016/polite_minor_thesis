@@ -18,7 +18,7 @@ import random
 import itertools
 from nltk.tokenize import word_tokenize
 import argparse
-
+import pandas as pd
 import sys
 sys.path.append(".")
 from src.basic.util import (decode2string, remove_duplicates, 
@@ -45,6 +45,17 @@ def parse_args():
     parser.add_argument(
         "--use_all_data", action="store_true",
         help="whether we use all data (including the test data) for training")
+    # New arguments for Excel file input and output
+    parser.add_argument(
+        "--tokenized_file", type=str, default="data/stanfordMOOCForumPostsSet/tokenized_forum.pkl",
+        help="Path to the tokenized Excel file containing the text data")
+    parser.add_argument(
+        "--output_file", type=str, default="data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.csv",
+        help="Path to save the csv file with politeness scores")
+    parser.add_argument(
+        "--forum_file", type=str, default="data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.xlsx",
+        help="Path to the Excel file containing the text data")
+
     args = parser.parse_args()
     return args
 
@@ -512,6 +523,102 @@ def score(sess, checkpoint, sents, restore=False):
     
     print("Average score:", (sum(all_scores) / len(all_scores)))
 
+def assign_scores_to_excel(sess, checkpoint, tokenized_forum_file, forum_file, output_file, token2index, restore=False):
+    """
+    Assign politeness scores to a pre-tokenized forum posts file and save the results to an Excel file.
+
+    Args:
+        sess: The TensorFlow session.
+        checkpoint: The path to the model checkpoint.
+        tokenized_forum_file: The path to the pre-tokenized forum posts .pkl file.
+        forum_file: The path to the original forum file (for reading text and adding scores).
+        output_file: The path to the output Excel file with politeness scores.
+        token2index: The token to index mapping for converting tokens to indices.
+        restore: Whether to restore variables from a checkpoint.
+    """
+
+    # Load pre-tokenized forum posts from the .pkl file
+    print(f"Loading tokenized forum data from {tokenized_forum_file}")
+    with open(tokenized_forum_file, 'rb') as f:
+        tokenized_sents = pickle.load(f)
+
+    print(f"Loaded {len(tokenized_sents)} forum posts from {tokenized_forum_file}")
+
+    # Convert tokens to indices
+    sents = [[token2index.get(token, token2index["UNK_TOKEN"]) for token in sent] for sent in tokenized_sents]
+
+    # Restore model variables if needed
+    if restore:
+        saver.restore(sess, checkpoint)
+        print("Restored pretrained variables.")
+
+    num_sents = len(sents)
+    num_batches = num_sents // batch_size
+    leftover = num_sents % batch_size  # This will hold the number of remaining samples in the last smaller batch
+
+    all_scores = []
+    n_discarded = 0
+
+    # Process full batches
+    for i in range(num_batches):
+        start = batch_size * i
+        end = start + batch_size
+        input_seqs = sents[start:end]
+        sequence_lengths = [len(turn) for turn in input_seqs]
+
+        feed_dict = {
+            inputs: pad(input_seqs, sequence_lengths),
+            seq_lengths: sequence_lengths,
+            is_training: False
+        }
+
+        try:
+            scores = sess.run(batch_scores, feed_dict=feed_dict)
+            all_scores.extend(scores)
+        except Exception as e:
+            n_discarded += 1
+            print(f"Warning: discarded batch {n_discarded} due to error: {e}")
+            continue
+        print(f"Scored batch {i}")
+
+    # Handle any leftover sentences (the last batch with fewer than 32 items)
+    if leftover > 0:
+        # Pad the last batch to batch_size (32)
+        input_seqs = sents[num_batches * batch_size:]
+        sequence_lengths = [len(turn) for turn in input_seqs]
+
+        # Pad input sequences to reach batch_size
+        while len(input_seqs) < batch_size:
+            input_seqs.append([token2index["UNK_TOKEN"]])  # Add padding with "UNK_TOKEN"
+            sequence_lengths.append(1)
+
+        feed_dict = {
+            inputs: pad(input_seqs, sequence_lengths),
+            seq_lengths: sequence_lengths,
+            is_training: False
+        }
+
+        try:
+            scores = sess.run(batch_scores, feed_dict=feed_dict)
+            # Only keep the real scores (without the padding)
+            all_scores.extend(scores[:leftover])
+        except Exception as e:
+            n_discarded += 1
+            print(f"Warning: discarded last batch due to error: {e}")
+
+    print(f"Average score for the entire dataset: {np.mean(all_scores)}")
+
+    # Append politeness scores to DataFrame
+    df = pd.read_excel(forum_file, engine='openpyxl')
+    if len(df) == len(all_scores):
+        df['politeness_score'] = all_scores  # Ensure scores are matched to sentences
+    else:
+        print(f"Warning: Length of scores ({len(all_scores)}) does not match DataFrame rows ({len(df)}).")
+
+    # Save DataFrame to output Excel file
+    df.to_csv(output_file, index=False)
+    print(f"Saved politeness scores to {output_file}")
+
 config = gpu_config()
 
 with tf.Session(graph=graph, config=config) as sess:
@@ -532,6 +639,17 @@ with tf.Session(graph=graph, config=config) as sess:
         if is_test:
             saver.restore(sess, ckpt)
             print("Restored pretrained variables.")
+            # Assign politeness scores to Excel file
+            if args.tokenized_file and args.output_file:
+                assign_scores_to_excel(
+                    sess=sess,
+                    checkpoint=ckpt,
+                    tokenized_forum_file=args.tokenized_file,
+                    forum_file=args.forum_file,
+                    output_file=args.output_file,
+                    token2index=token2index,
+                    restore=False
+                )
             run(sess, requests_test_WIKI, labels_test_WIKI,
                 num_test_batches_WIKI, "test", 2, "WIKI")
             run(sess, requests_test_SE, labels_test_SE,
@@ -544,4 +662,5 @@ with tf.Session(graph=graph, config=config) as sess:
                     num_test_batches_WIKI, "test", i, "WIKI")
                 run(sess, requests_test_SE, labels_test_SE,
                     num_test_batches_SE, "test", i, "SE")
+
 
