@@ -49,13 +49,10 @@ After 3 epochs, the model should get average 84.4% and 70.2% accuracies on the W
 
 To test the politeness classifier and apply the politeness score to the forum post excel file as a new csv file, please run
 ```
-python src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt ckpt/politeness_classifier_2 [path of the checkpoint trained model] --tokenized_file data/stanfordMOOCForumPostsSet/tokenized_forum.pkl [path of the preprocessed excel file] --output_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.csv [path of the new csv file] 
-
+python src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt ckpt/politeness_classifier_2 [path of the checkpoint trained model] --tokenized_file data/stanfordMOOCForumPostsSet/tokenized_forum.pkl [path of the preprocessed excel file] --output_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.csv [path of the new csv file]
 ```
 
-
-
-The trained model is also uploaded to under ckpt/
+The best trained model is also uploaded to under ckpt/ for easier reference
 
 ## Politeness Analysis
 Now with the politeness score generated from LSTM-CNN model, we may use the python script to conduct the analysis.
