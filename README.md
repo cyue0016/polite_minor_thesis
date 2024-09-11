@@ -45,6 +45,7 @@ To train the politeness classifier from scratch, please run
 ```
 python src/model/LSTM-CNN-multi-GPU-new_vocab.py
 ```
+After 3 epochs, the model should get average 84.4% and 70.2% accuracies on the WIKI and SE domains respectively (for comparison to results from previous works, please refer to [Niu's paper](https://arxiv.org/abs/1805.03162)). 
 
 To test the politeness classifier and apply the politeness score to the forum post excel file as a new csv file, please run
 ```
@@ -52,7 +53,7 @@ python src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt ckpt/politeness_c
 
 ```
 
-The model should get 84.4% and 70.2% accuracies on the WIKI and SE domains, respectively (for comparison to results from previous works, please refer to [the paper](https://arxiv.org/abs/1805.03162)). 
+
 
 The trained model is also uploaded to under ckpt/
 
