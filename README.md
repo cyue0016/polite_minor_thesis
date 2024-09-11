@@ -38,6 +38,8 @@ To preprocess the politeness data of the 3 datasets, please run
 python src/basic/read_csv.py
 python src/basic/process_requests.py  --forum_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.xlsx [path of the excel file] --forum_text_column "Text" [Text column of the excel file] --tagger_path stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar [jar file of the Stanford Postagger] --word2vec GoogleNews-vectors-negative300.bin [pretrained word2vec embeddings binary file]
 ```
+After the preprocessing, the pkl files should be ready for model training, the Shared vocab size is 8765 while the New vocab size is 339.
+
 
 To train the politeness classifier from scratch, please run
 ```
