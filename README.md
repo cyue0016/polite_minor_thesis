@@ -1,6 +1,8 @@
 # Politeness of Educational Forum Posts
 
 Author: YUEN, Chak Shing
+Faculty of Information Technology
+Monash University
 
 Based on the LSTM-CNN politeness model scripts from Tong in 2018, I further modified the code to include the Stanford forum post data and test the model accuracy.
 
@@ -34,7 +36,7 @@ conda install openpyxl
 To preprocess the politeness data of the 3 datasets, please run
 ```
 python src/basic/read_csv.py
-python src/basic/process_requests.py  --forum_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.xlsx --forum_text_column "Text" --tagger_path stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar --word2vec GoogleNews-vectors-negative300.bin
+python src/basic/process_requests.py  --forum_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.xlsx [path of the excel file] --forum_text_column "Text" [Text column of the excel file] --tagger_path stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar [jar file of the Stanford Postagger] --word2vec GoogleNews-vectors-negative300.bin [pretrained word2vec embeddings binary file]
 ```
 
 To train the politeness classifier from scratch, please run
@@ -42,22 +44,18 @@ To train the politeness classifier from scratch, please run
 python src/model/LSTM-CNN-multi-GPU-new_vocab.py
 ```
 
-To test the politeness classifier, please run
+To test the politeness classifier and apply the politeness score to the forum post excel file as a new csv file, please run
 ```
-python src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt ckpt/politeness_classifier_2[name of the checkpoint]
-```
+python src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt ckpt/politeness_classifier_2 [path of the checkpoint trained model] --tokenized_file data/stanfordMOOCForumPostsSet/tokenized_forum.pkl [path of the preprocessed excel file] --output_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.csv [path of the new csv file] 
 
-To apply the politeness score to the forum post excel file as a new column, please run
-```
-python
 ```
 
 The model should get 84.4% and 70.2% accuracies on the WIKI and SE domains, respectively (for comparison to results from previous works, please refer to [the paper](https://arxiv.org/abs/1805.03162)). 
 
 The trained model is also uploaded to under ckpt/
 
-## Polite Dialogue Generation
-
+## Politeness Analysis
+Now with the politeness score generated from LSTM-CNN model, we may use the python script to conduct the analysis.
 
 ## Citations
 
@@ -65,7 +63,7 @@ Please cite both my paper and Niu's paper if you appear to use the politeness cl
 
 
 
-[citing our paper](https://transacl.org/ojs/index.php/tacl/rt/captureCite/1424/310/BibtexCitationPlugin).
+[citing Niu's paper](https://transacl.org/ojs/index.php/tacl/rt/captureCite/1424/310/BibtexCitationPlugin).
 ```
 @article{TACL1424,
 	author = {Niu, Tong and Bansal, Mohit},
