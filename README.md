@@ -55,7 +55,7 @@ python src/model/LSTM-CNN-multi-GPU-new_vocab.py
 ```
 After 3 epochs, the model should get average 84.4% and 70.2% accuracies on the WIKI and SE domains respectively (for comparison to results from previous works, please refer to [Niu's paper](https://arxiv.org/abs/1805.03162)). 
 
-### 1.3.4 Test the politeness classifier and apply the politeness score to the forum post excel file as a new csv file
+### 1.3.4 Test the politeness classifier and apply the politeness score to a new csv file
 ```
 python src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt ckpt/politeness_classifier_2 [path of the checkpoint trained model] --tokenized_file data/stanfordMOOCForumPostsSet/tokenized_forum.pkl [path of the preprocessed excel file] --output_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.csv [path of the new csv file]
 ```
@@ -63,10 +63,10 @@ python src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt ckpt/politeness_c
 The best trained model is also uploaded to under ckpt/ for easier reference.
 Only the scripts mentioned are modified for the project. Other scripts forked from Niu's repository remains unchanged
 
-# 2 Politeness Classifier using convo kit
+# 2 Politeness Classifier using Convo toolkit
 
 ## 2.1 Environment
-Python: 3.6.13
+Python: 3.9
 
 Now with the politeness score generated from LSTM-CNN model, we may use the ipynb file to conduct the analysis together with convo package
 
