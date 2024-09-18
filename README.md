@@ -31,7 +31,7 @@ conda install openpyxl
 
 ## 1.3 Processing Steps
 
-### 1.3.1 Prerequisite:
+### 1.3.1 Prerequisites:
 
 (1) Obtain the [Stanford Politeness Corpus](http://www.cs.cornell.edu/~cristian/Politeness_files/Stanford_politeness_corpus.zip), unzip it, and put the folder and files inside under data/
 
@@ -41,7 +41,7 @@ conda install openpyxl
 
 (4) Obtain the [stanfordMOOCForumPostsSet]([https://datastage.stanford.edu/StanfordMoocPosts](https://github.com/akshayka/edxclassify?tab=readme-ov-file)), and put the folder and files inside under data/
 
-### 1.3.2 Preprocess the politeness data of the 3 datasets, please run
+### 1.3.2 Preprocess the politeness data of the 3 datasets
 ```
 python src/basic/read_csv.py
 python src/basic/process_requests.py  --forum_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.xlsx [path of the excel file] --forum_text_column "Text" [Text column of the excel file] --tagger_path stanford-postagger-full-2020-11-17/stanford-postagger-4.2.0.jar [jar file of the Stanford Postagger] --word2vec GoogleNews-vectors-negative300.bin [pretrained word2vec embeddings binary file]
@@ -49,13 +49,13 @@ python src/basic/process_requests.py  --forum_file data/stanfordMOOCForumPostsSe
 After the preprocessing, the pkl files should be ready for model training, the Shared vocab size is 8765 while the New vocab size is 339.
 
 
-### 1.3.3 Train the politeness classifier from scratch, please run
+### 1.3.3 Train the politeness classifier from scratch
 ```
 python src/model/LSTM-CNN-multi-GPU-new_vocab.py
 ```
 After 3 epochs, the model should get average 84.4% and 70.2% accuracies on the WIKI and SE domains respectively (for comparison to results from previous works, please refer to [Niu's paper](https://arxiv.org/abs/1805.03162)). 
 
-### 1.3.4 Test the politeness classifier and apply the politeness score to the forum post excel file as a new csv file, please run
+### 1.3.4 Test the politeness classifier and apply the politeness score to the forum post excel file as a new csv file
 ```
 python src/model/LSTM-CNN-multi-GPU-new_vocab.py --test --ckpt ckpt/politeness_classifier_2 [path of the checkpoint trained model] --tokenized_file data/stanfordMOOCForumPostsSet/tokenized_forum.pkl [path of the preprocessed excel file] --output_file data/stanfordMOOCForumPostsSet/stanfordMOOCForumPostsSet.csv [path of the new csv file]
 ```
@@ -70,7 +70,7 @@ Python: 3.6.13
 
 Now with the politeness score generated from LSTM-CNN model, we may use the ipynb file to conduct the analysis together with convo package
 
-For details, please refer to the ipynb file,
+For details, please refer to the ipynb file
 
 # 3 Citations
 
