@@ -77,7 +77,8 @@ For details, please refer to the ipynb file,
 Please cite both my paper and Niu's paper if you appear to use the politeness classifier.
 
 
-## Niu's
+## [Niu's paper](https://arxiv.org/abs/1805.03162)
+
 ```
 @article{TACL1424,
 	author = {Niu, Tong and Bansal, Mohit},
