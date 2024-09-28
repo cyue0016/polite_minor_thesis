@@ -53,7 +53,7 @@ After the preprocessing, the pkl files should be ready for model training, the S
 ```
 python src/model/LSTM-CNN-multi-GPU-new_vocab.py
 ```
-After 3 epochs, the model should get average 84.4% and 70.2% accuracies on the WIKI and SE domains respectively (for comparison to results from previous works, please refer to [Niu's paper](https://arxiv.org/abs/1805.03162)). 
+After 3 epochs, the model should get average 82.9% and 70.5% accuracies on the WIKI and SE domains respectively (for comparison to results from previous works, please refer to [Niu's paper](https://arxiv.org/abs/1805.03162)). 
 
 ### 1.3.4 Test the politeness classifier and apply the politeness score to a new csv file
 ```
