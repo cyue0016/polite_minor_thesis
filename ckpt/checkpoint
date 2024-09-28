@@ -1,0 +1,4 @@
+model_checkpoint_path: "politeness_classifier_2"
+all_model_checkpoint_paths: "politeness_classifier_0"
+all_model_checkpoint_paths: "politeness_classifier_1"
+all_model_checkpoint_paths: "politeness_classifier_2"
