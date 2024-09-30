@@ -69,16 +69,29 @@ Only the scripts mentioned are modified for the project. Other scripts forked fr
 ## 2.1 Environment
 Python: 3.9
 
-Now with the politeness score generated from LSTM-CNN model, we may use the ipynb file to conduct the analysis together with convo package
+## 2.2 Processing Steps
+Now with the politeness score generated from LSTM-CNN model, we may use the convokit package to extract the politeness classifier value and politeness strategies used for each post. 
 
-For details, please refer to the ipynb file
+For details, please refer to the Politeness.ipynb file.
 
-# 3 Citations
+# 3 Politeness Classifier using Convo toolkit
 
-Please cite both my paper and Niu's paper if you appear to use the politeness classifier.
+## 3.1 Environment
+Python: 3.9
+
+## 3.2 Processing Steps
+The dataset is now being analyzed.
+
+For details, please refer to the graph.ipynb file.
+
+# 4 Citations
+
+Please cite Niu's paper if you appear to use the politeness classifier.
+
+For my paper, it will be updated once available.
 
 
-## 3.1 [Niu's paper](https://arxiv.org/abs/1805.03162)
+## 4.1 [Niu's paper](https://arxiv.org/abs/1805.03162)
 
 ```
 @article{TACL1424,
