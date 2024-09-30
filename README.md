@@ -74,7 +74,7 @@ Now with the politeness score generated from LSTM-CNN model, we may use the conv
 
 For details, please refer to the Politeness.ipynb file.
 
-# 3 Politeness Classifier using Convo toolkit
+# 3 Analysis
 
 ## 3.1 Environment
 Python: 3.9
