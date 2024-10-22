@@ -8,7 +8,7 @@ Monash University
 
 ## Project Description
 
-Based on the LSTM-CNN politeness model proposed in 2018 in [Niu's paper](https://arxiv.org/abs/1805.03162), I forked the repository and further modified the code needed to process the Stanford forum post data and assign politeness score using his model, then analysis is conducted on the stanford forum post dataset.
+Based on the LSTM-CNN politeness model proposed in 2018 in [Niu's paper](https://arxiv.org/abs/1805.03162), I forked the repository and further modified the code needed to process the Stanford forum post data and assign politeness score using his model, then further analysis was conducted on the stanford forum post dataset.
 
 # 1. LSTM-CNN Politeness Score
 
@@ -72,7 +72,7 @@ Python: 3.9
 ## 2.2 Processing Steps
 Now with the politeness score generated from LSTM-CNN model, we may use the convokit package to extract the politeness classifier value and politeness strategies used for each post. 
 
-For details, please refer to the Politeness.ipynb file.
+For details, please refer to the Politeness.ipynb file and [ConvoKit](https://convokit.cornell.edu/)). 
 
 # 3 Analysis
 
@@ -80,7 +80,7 @@ For details, please refer to the Politeness.ipynb file.
 Python: 3.9
 
 ## 3.2 Processing Steps
-The dataset is now being analyzed.
+The dataset was then being analyzed.
 
 For details, please refer to the graph.ipynb file.
 
@@ -88,7 +88,9 @@ For details, please refer to the graph.ipynb file.
 
 Please cite Niu's paper if you appear to use the politeness classifier.
 
-For my paper, it will be updated once available.
+Please cite relevant papers if you appear to use the relevant proportion of [ConvoKit](https://convokit.cornell.edu/)). 
+
+To be continued on this section
 
 
 ## 4.1 [Niu's paper](https://arxiv.org/abs/1805.03162)
