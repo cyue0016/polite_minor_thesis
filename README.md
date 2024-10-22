@@ -72,7 +72,7 @@ Python: 3.9
 ## 2.2 Processing Steps
 Now with the politeness score generated from LSTM-CNN model, we may use the convokit package to extract the politeness classifier value and politeness strategies used for each post. 
 
-For details, please refer to the Politeness.ipynb file and [ConvoKit](https://convokit.cornell.edu/)). 
+For details, please refer to the Politeness.ipynb file and [ConvoKit](https://convokit.cornell.edu/). 
 
 # 3 Analysis
 
@@ -88,7 +88,7 @@ For details, please refer to the graph.ipynb file.
 
 Please cite Niu's paper if you appear to use the politeness classifier.
 
-Please cite relevant papers if you appear to use the relevant proportion of [ConvoKit](https://convokit.cornell.edu/)). 
+Please cite relevant papers if you appear to use the relevant proportion of [ConvoKit](https://convokit.cornell.edu/). 
 
 To be continued on this section
 
